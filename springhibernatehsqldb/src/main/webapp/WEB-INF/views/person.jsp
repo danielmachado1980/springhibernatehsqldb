@@ -11,7 +11,7 @@
 <title>Person List</title>
 </head>
 <body>
-	<h1>Hello World!</h1>
+	<h1>Lista de Pessoas</h1>
 	<fieldset><legend>Resultados</legend>
 	<br>
 	<table class="table table-hover">
