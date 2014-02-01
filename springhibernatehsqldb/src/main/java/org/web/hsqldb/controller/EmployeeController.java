@@ -67,5 +67,35 @@ public class EmployeeController {
 	   model.addAttribute("employees", lstResult);  
 	   return "addEmployee";  
 	 }  
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)  
+	public ModelAndView editEmployee(@ModelAttribute("command")Employee employeeBean,  
+      BindingResult result) {  
+	  //employeeService.deleteEmployee(prepareModel(employeeBean));  
+	  Map<String, Object> model = new HashMap<String, Object>();  
+	  model.put("employee", null);  
+	  //model.put("employees",  prepareListofBean(employeeService.listEmployeess()));  
+	  return new ModelAndView("addEmployee", model);  
+	 }  
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)  
+	public ModelAndView deleteEmployee(@ModelAttribute("command")Employee employeeBean,  
+	   BindingResult result) {  
+	  Map<String, Object> model = new HashMap<String, Object>();  
+//	  model.put("employee", prepareEmployeeBean(employeeService.getEmployee(employeeBean.getId())));  
+//	  model.put("employees",  prepareListofBean(employeeService.listEmployeess()));  
+	  return new ModelAndView("addEmployee", model);  
+	 }  
+	
+	private Employee prepareModel(Employee employeeBean){  
+		  Employee employee = new Employee();  
+		  employee.setAddress(employeeBean.getAddress());  
+		  employee.setEmpage(employeeBean.getEmpage());  
+		  employee.setEmpname(employeeBean.getEmpname());  
+		  employee.setSalary(employeeBean.getSalary());  
+		  employee.setEmpid(employeeBean.getEmpid());  
+		  employee.setEmpid(null);  
+		  return employee;  
+		 }  
 
 }
