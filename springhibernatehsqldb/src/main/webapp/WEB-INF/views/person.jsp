@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/bootstrap-responsive.min.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Person List</title>
+<title>Person</title>
 </head>
 <body>
 	<h1>Lista de Pessoas</h1>
