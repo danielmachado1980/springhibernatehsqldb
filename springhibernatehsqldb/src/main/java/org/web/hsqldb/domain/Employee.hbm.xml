@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31/01/2014 22:30:39 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.web.hsqldb.domain.Employee" table="EMPLOYEE" schema="PUBLIC" catalog="PUBLIC">
+        <id name="empid" type="java.lang.Integer">
+            <column name="EMPID" />
+            <generator class="identity" />
+        </id>
+        <property name="empname" type="string">
+            <column name="EMPNAME" length="20" not-null="true" />
+        </property>
+        <property name="empage" type="int">
+            <column name="EMPAGE" not-null="true" />
+        </property>
+        <property name="salary" type="long">
+            <column name="SALARY" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="ADDRESS" length="200" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
