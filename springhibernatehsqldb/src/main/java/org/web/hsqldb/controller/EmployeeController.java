@@ -2,6 +2,7 @@ package org.web.hsqldb.controller;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.web.hsqldb.dao.EmployeeDao;
 import org.web.hsqldb.domain.Employee;
 import org.web.hsqldb.model.HibernateUtil;
+import org.web.hsqldb.service.EmployeeServiceImpl;
+import org.web.hsqldb.service.interfaces.EmployeeService;
 
 @Controller
 public class EmployeeController {
+	
+	@Autowired  
+	private EmployeeServiceImpl employeeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 	
@@ -73,7 +80,7 @@ public class EmployeeController {
       BindingResult result) {  
 	  //employeeService.deleteEmployee(prepareModel(employeeBean));  
 	  Map<String, Object> model = new HashMap<String, Object>();  
-	  model.put("employee", null);  
+//	  model.put("employee", null);  
 	  //model.put("employees",  prepareListofBean(employeeService.listEmployeess()));  
 	  return new ModelAndView("addEmployee", model);  
 	 }  
@@ -82,8 +89,9 @@ public class EmployeeController {
 	public ModelAndView deleteEmployee(@ModelAttribute("command")Employee employeeBean,  
 	   BindingResult result) {  
 	  Map<String, Object> model = new HashMap<String, Object>();  
-//	  model.put("employee", prepareEmployeeBean(employeeService.getEmployee(employeeBean.getId())));  
-//	  model.put("employees",  prepareListofBean(employeeService.listEmployeess()));  
+//	  model.put("employee", prepareEmployeeBean(employeeService.getEmployee(employeeBean.getEmpid())));  
+//	  model.put("employees",  prepareListofBean(employeeService.listEmployees()));  
+//	  
 	  return new ModelAndView("addEmployee", model);  
 	 }  
 	
@@ -96,6 +104,34 @@ public class EmployeeController {
 		  employee.setEmpid(employeeBean.getEmpid());  
 		  employee.setEmpid(null);  
 		  return employee;  
+		 } 
+	
+	private List<Employee> prepareListofBean(List<Employee> employees){  
+		  List<Employee> beans = null;  
+		  if(employees != null && !employees.isEmpty()){  
+		   beans = new ArrayList<Employee>();  
+		   Employee bean = null;  
+		   for(Employee employee : employees){  
+		    bean = new Employee();  
+		    bean.setEmpname(employee.getEmpname());  
+		    bean.setEmpid(employee.getEmpid());  
+		    bean.setAddress(employee.getAddress());  
+		    bean.setSalary(employee.getSalary());  
+		    bean.setEmpage(employee.getEmpage());  
+		    beans.add(bean);  
+		   }  
+		  }  
+		  return beans;  
+		 }  
+		   
+		 private Employee prepareEmployeeBean(Employee employee){  
+		  Employee bean = new Employee();  
+		  bean.setAddress(employee.getAddress());  
+		  bean.setEmpage(employee.getEmpage());  
+		  bean.setEmpname(employee.getEmpname());  
+		  bean.setSalary(employee.getSalary());  
+		  bean.setEmpid(employee.getEmpid());  
+		  return bean;  
 		 }  
 
 }
