@@ -1,5 +1,7 @@
 package org.web.hsqldb.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,17 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.web.hsqldb.dao.EmployeeDao;
 import org.web.hsqldb.domain.Employee;
 import org.web.hsqldb.model.HibernateUtil;
-import org.web.hsqldb.service.EmployeeServiceImpl;
-import org.web.hsqldb.service.interfaces.EmployeeService;
 
 @Controller
 public class EmployeeController {
-	
-	@Autowired  
-	private EmployeeServiceImpl employeeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 	
@@ -47,11 +42,14 @@ public class EmployeeController {
 		
 		try
 		{
+			//Starting up the driver
+            Class.forName("org.hsqldb.jdbcDriver");
+            //Connecting...
+            Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:59999/test","sa","");
+    		//Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","hr");
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		    session.beginTransaction();
-		    
-		    List<Employee> result = (List<Employee>)new EmployeeDao().listEmployees();
-		    
+		    List<Employee> result = (List<Employee>)session.createQuery("from Employee").list();
 		    model.addAttribute("employee",result);
 		}
 		catch(Exception exc)
@@ -70,8 +68,8 @@ public class EmployeeController {
 	   Session session = HibernateUtil.getSessionFactory().getCurrentSession();
        session.beginTransaction();
     
-       List<Employee> lstResult = (List<Employee>)new EmployeeDao().listEmployees();
-	   model.addAttribute("employees", lstResult);  
+//       List<Employee> lstResult = (List<Employee>)new EmployeeDao().listEmployees();
+//	   model.addAttribute("employees", lstResult);  
 	   return "addEmployee";  
 	 }  
 	
