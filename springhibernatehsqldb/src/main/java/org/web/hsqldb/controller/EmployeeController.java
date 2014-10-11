@@ -31,7 +31,7 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/employee", method = RequestMethod.GET)
 	public String show(Locale locale, Model model) throws SQLException {
-		logger.info("Welcome home! The client locale is {}.", locale);
+		logger.info("Welcome employee! The client locale is {}.", locale);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -43,14 +43,16 @@ public class EmployeeController {
 		try
 		{
 			//Starting up the driver
-            Class.forName("org.hsqldb.jdbcDriver");
+            //Class.forName("org.hsqldb.jdbcDriver");
+            Class.forName ("oracle.jdbc.OracleDriver");
             //Connecting...
-            Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:59999/test","sa","");
-    		//Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","hr");
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		    session.beginTransaction();
-		    List<Employee> result = (List<Employee>)session.createQuery("from Employee").list();
-		    model.addAttribute("employee",result);
+            //Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:59999/test","sa","");
+    		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","HR","hr");
+			//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		    //session.beginTransaction();
+		    //List<Employee> result = (List<Employee>)session.createQuery("from Employee").list();
+		    //model.addAttribute("employee",result);
+    		logger.info("Success!!! Oracle connection on.");
 		}
 		catch(Exception exc)
 		{ 
