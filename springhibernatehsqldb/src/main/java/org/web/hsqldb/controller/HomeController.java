@@ -52,7 +52,7 @@ public class HomeController {
 		//Connecting...
         Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:59999/test","sa","");
 		//Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","HR","hr");
-        logger.info("SUCCESS!!! Connection on.");
+        logger.info("SUCCESS!!! Connection on ;).");
 		return "home";
 	}
 	
